@@ -38,6 +38,7 @@ Step 4: Test Your Solution
 - Use a variety of inputs to confirm the `finally` block always executes
 */
 
+
 // ============================================
 // 🛠️ Starter Code: processFile Function
 // ============================================
@@ -63,7 +64,50 @@ function processFile(fileName, fileData) {
 // 🧪 Test Cases Below
 // ============================================
 
+function processFile(fileName, fileData) {
+  let fileHandleOpen = false;
+
+  try {
+    // ✅ Step 2: Input validation + throw custom exceptions
+    if (fileName === undefined || fileName === null || fileName === "") {
+      throw new ReferenceError("File name is missing");
+    }
+
+    if (typeof fileData !== "string") {
+      throw new TypeError("File data must be a string");
+    }
+
+    if (fileData.trim() === "") {
+      throw new Error("File data cannot be empty");
+    }
+
+    // ✅ Step 1: Simulated file processing
+    fileHandleOpen = true;
+    console.log(`Processing file: ${fileName}`);
+    console.log(`File content: ${fileData}`);
+
+    // ✅ Step 1/2: Simulated operations (read/write)
+    console.log("Reading file...");
+    console.log("Writing file...");
+    console.log("File processed successfully!");
+  } catch (err) {
+    // ✅ Step 1: Error handling
+    console.error(`${err.name}: ${err.message}`);
+  } finally {
+    // ✅ Step 3: finally always runs
+    if (fileHandleOpen) {
+      console.log("Closing file handle (cleanup in finally).");
+      fileHandleOpen = false;
+    } else {
+      console.log("No file handle to close (cleanup in finally).");
+    }
+  }
+}
+// ===============================
+// Test Cases Below
+// ===============================
+
 processFile(); // ❌ ReferenceError: File name is missing
 processFile("myFile.txt", 42); // ❌ TypeError: File data must be a string
 processFile("myFile.txt", ""); // ❌ Error: File data cannot be empty
-processFile("myFile.txt", "Hello, world!"); // ✅ Should process successfully
+processFile("myFile.txt", "Hello, world!"); // ✅ Success
